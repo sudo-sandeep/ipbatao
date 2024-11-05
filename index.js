@@ -8,13 +8,8 @@ app.use(express.json({limit:"16kb"}))
 app.use(cors());
 
 app.get('/',(req,res)=>{
-    const ip1 = req.ip;
-    const ip2 = req.headers['x-forwarded-for'];
-    const ip3 = req.connection.remoteAddress;
-    console.log(ip1,ip2,ip3)
-    res.status(200).json({message:"Working!",success:true,data:{
-        working:"Testing"
-    }})
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    res.status(200).json({message:"Working!",success:true,data:ip})
 })
 
 app.get('*',(_,res)=>{
